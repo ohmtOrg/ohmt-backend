@@ -1,82 +1,59 @@
-import userController from '../../controllers/userController';
+import orgController from '../../controllers/org';
 import validate from '../../middlewares/validator';
 import {
-  signUpSchema,
-  signInSchema,
-  updateUserSchema,
-  getUserSchema,
-  setUserRoleSchema,
-  emailSchema,
-  passwordSchema,
-} from '../../validation/userSchema';
-import checkBlacklist from '../../middlewares/blacklistMiddleware';
-import verifyEmailController from '../../controllers/emailVerificationController';
+  createOrgSchema,
+  updateOrgSchema,
+} from '../../validation/organisationSchema';
+
 import { checkUserId, checkToken } from '../../middlewares/userMiddlewares';
 import authorize from '../../middlewares/authorizer';
 import roles from '../../utils/roles';
-import multerUploads from '../../middlewares/multer';
-import uploadImage from '../../middlewares/imageUploader';
 
 const {
-  signUp,
-  signIn,
-  logout,
-  getUserDetailsById,
-  updateUserDetails,
-  forgotPassword,
-  resetPassword,
-  setUserRole,
-} = userController;
+  createOrg,
+  deleteOrg,
+  getOneOrg,
+  updateOrgDetails,
+  getAllOrg,
+} = orgController;
 
-const { verifyEmail } = verifyEmailController;
-
-const userRoute = router => {
-  router.route('/user/signup').post(validate(signUpSchema), signUp);
-
-  router.route('/user/signin').post(validate(signInSchema), signIn);
-  router.route('/user/logout').post(checkToken, checkBlacklist, logout);
-
-  // Email verification endpoint
-  router.route('/user/verify/:token').get(verifyEmail);
-
+const orgRoute = router => {
   router
-    .route('/users')
-    .get(
+    .route('/org')
+    .post(
       checkToken,
-      checkBlacklist,
-      validate(getUserSchema),
-      checkUserId,
-      getUserDetailsById
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+      validate(createOrgSchema),
+      createOrg
     );
 
+  router.route('/org').get(checkToken, checkUserId, getAllOrg);
+
   router
-    .route('/users/:userId')
+    .route('/org/:orgId')
     .put(
       checkToken,
-      checkBlacklist,
-      multerUploads,
-      validate(updateUserSchema),
+      validate(updateOrgSchema),
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
       checkUserId,
-      uploadImage,
-      updateUserDetails
+      updateOrgDetails
     );
-
-  router.route('/forgot/password').post(validate(emailSchema), forgotPassword);
   router
-    .route('/reset/password/:userId/:token')
-    .patch(validate(passwordSchema), resetPassword);
-
-  router
-    .route('/role/users/:userId')
-
-    .patch(
+    .route('/org/:orgId')
+    .delete(
       checkToken,
-      checkBlacklist,
-      validate(setUserRoleSchema),
-      authorize([roles.SUPER_ADMIN]),
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
       checkUserId,
-      setUserRole
+      deleteOrg
+    );
+  router
+    .route('/org/:orgId')
+    .get(
+      checkToken,
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+      checkUserId,
+      getOneOrg
     );
 };
 
-export default userRoute;
+export default orgRoute;

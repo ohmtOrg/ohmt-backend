@@ -1,82 +1,62 @@
-import userController from '../../controllers/userController';
+import reportController from '../../controllers/report';
 import validate from '../../middlewares/validator';
 import {
-  signUpSchema,
-  signInSchema,
-  updateUserSchema,
-  getUserSchema,
-  setUserRoleSchema,
-  emailSchema,
-  passwordSchema,
-} from '../../validation/userSchema';
-import checkBlacklist from '../../middlewares/blacklistMiddleware';
-import verifyEmailController from '../../controllers/emailVerificationController';
+  createReportSchema,
+  updateReportSchema,
+} from '../../validation/reportSchema';
+
 import { checkUserId, checkToken } from '../../middlewares/userMiddlewares';
 import authorize from '../../middlewares/authorizer';
 import roles from '../../utils/roles';
-import multerUploads from '../../middlewares/multer';
-import uploadImage from '../../middlewares/imageUploader';
 
 const {
-  signUp,
-  signIn,
-  logout,
-  getUserDetailsById,
-  updateUserDetails,
-  forgotPassword,
-  resetPassword,
-  setUserRole,
-} = userController;
+  createReport,
+  deleteReport,
+  getOneReport,
+  updateReportDetails,
+  getAllReport,
+  getMyReport,
+} = reportController;
 
-const { verifyEmail } = verifyEmailController;
-
-const userRoute = router => {
-  router.route('/user/signup').post(validate(signUpSchema), signUp);
-
-  router.route('/user/signin').post(validate(signInSchema), signIn);
-  router.route('/user/logout').post(checkToken, checkBlacklist, logout);
-
-  // Email verification endpoint
-  router.route('/user/verify/:token').get(verifyEmail);
+const reportRoute = router => {
+  router
+    .route('/report')
+    .post(
+      checkToken,
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+      validate(createReportSchema),
+      createReport
+    );
 
   router
-    .route('/users')
+    .route('/report')
     .get(
       checkToken,
-      checkBlacklist,
-      validate(getUserSchema),
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
       checkUserId,
-      getUserDetailsById
+      getAllReport
     );
 
   router
-    .route('/users/:userId')
+    .route('/report/:reportId')
     .put(
       checkToken,
-      checkBlacklist,
-      multerUploads,
-      validate(updateUserSchema),
+      validate(updateReportSchema),
       checkUserId,
-      uploadImage,
-      updateUserDetails
+      updateReportDetails
     );
-
-  router.route('/forgot/password').post(validate(emailSchema), forgotPassword);
   router
-    .route('/reset/password/:userId/:token')
-    .patch(validate(passwordSchema), resetPassword);
-
+    .route('/report/:reportId')
+    .delete(checkToken, checkUserId, deleteReport);
   router
-    .route('/role/users/:userId')
-
-    .patch(
+    .route('/report/:reportId')
+    .get(
       checkToken,
-      checkBlacklist,
-      validate(setUserRoleSchema),
-      authorize([roles.SUPER_ADMIN]),
+      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
       checkUserId,
-      setUserRole
+      getOneReport
     );
+  router.route('/report/me').get(checkToken, checkUserId, getMyreport);
 };
 
-export default userRoute;
+export default reportRoute;
