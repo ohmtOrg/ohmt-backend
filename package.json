@@ -1,0 +1,58 @@
+{
+  "name": "ohmt-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "format": "prettier --trailing-comma es5 --single-quote --write '**/*.{js,md,json}'"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "cuid": "^2.1.4",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.13",
+    "morgan": "^1.9.1",
+    "validator": "^10.9.0",
+    "@hapi/joi": "^15.1.1",
+    "@sendgrid/mail": "^6.4.0",
+    "bcrypt": "^3.0.6",
+    "method-override": "^3.0.0",
+    "esm": "^3.2.25"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "concurrently": "^4.1.2",
+    "husky": "^3.0.7",
+    "lint-staged": "^9.4.1",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,md,css,html}": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salviosage/ohmt-backend.git"
+  },
+  "author": "salvi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salviosage/ohmt-backend/issues"
+  },
+  "homepage": "https://github.com/salviosage/ohmt-backend#readme"
+}
