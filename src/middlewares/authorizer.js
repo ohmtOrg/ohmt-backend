@@ -10,7 +10,7 @@ import roles from '../utils/roles';
 const authorize = permitedRoles => (req, res, next) => {
   const { role } = req.decoded;
 
-  if (permitedRoles.includes(roleId) || roleId === roles.SUPER_ADMIN) {
+  if (permitedRoles.includes(role) || role === roles.SUPER_ADMIN) {
     return next();
   }
 

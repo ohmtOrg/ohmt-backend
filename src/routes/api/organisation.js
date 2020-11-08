@@ -11,10 +11,10 @@ import roles from '../../utils/roles';
 
 const {
   createOrg,
-  deleteOrg,
-  getOneOrg,
+  //   deleteOrg,
+  //   getOneOrg,
   updateOrgDetails,
-  getAllOrg,
+  //   getAllOrg,
 } = orgController;
 
 const orgRoute = router => {
@@ -27,7 +27,7 @@ const orgRoute = router => {
       createOrg
     );
 
-  router.route('/org').get(checkToken, checkUserId, getAllOrg);
+  //   router.route('/org').get(checkToken, checkUserId, getAllOrg);
 
   router
     .route('/org/:orgId')
@@ -38,22 +38,22 @@ const orgRoute = router => {
       checkUserId,
       updateOrgDetails
     );
-  router
-    .route('/org/:orgId')
-    .delete(
-      checkToken,
-      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-      checkUserId,
-      deleteOrg
-    );
-  router
-    .route('/org/:orgId')
-    .get(
-      checkToken,
-      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-      checkUserId,
-      getOneOrg
-    );
+  //   router
+  //     .route('/org/:orgId')
+  //     .delete(
+  //       checkToken,
+  //       authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+  //       checkUserId,
+  //       deleteOrg
+  //     );
+  //   router
+  //     .route('/org/:orgId')
+  //     .get(
+  //       checkToken,
+  //       authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+  //       checkUserId,
+  //       getOneOrg
+  //     );
 };
 
 export default orgRoute;

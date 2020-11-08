@@ -1,15 +1,15 @@
 import response from '../utils/response';
 import userRoute from './api/user';
-import orgRoutes from './api/org';
+import orgRoutes from './api/organisation';
 import feedbackRoutes from './api/feedback';
-import reportRoute from './api/report';
+import reportRoute from './api/reports';
 const routes = router => {
   router.route('/').get((req, res) =>
     response(res, 200, 'success', {
       message: 'welcome to OHMT API',
     })
   );
-
+  console.log('here in routes');
   // user routes
   userRoute(router);
   // request routes
@@ -19,6 +19,7 @@ const routes = router => {
 
   // chat routes
   orgRoutes(router);
+  console.log('afterroutes');
 };
 
 export default routes;

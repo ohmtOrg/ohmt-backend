@@ -1,7 +1,5 @@
 import response from '../utils/response';
 import { verifyToken } from '../utils/authHelper';
-import { updateById } from '../services/userServices';
-import '../config/env';
 
 /**
  * mail controller
@@ -11,8 +9,8 @@ import '../config/env';
  */
 const verifyEmail = async (req, res) => {
   try {
-    const { id } = await verifyToken(req.params.token);
-    await updateById(id, { verified: true });
+    const { _id } = await verifyToken(req.params.token);
+    await FindOneAndUpdate(_id, { verified: true });
     return res.redirect(process.env.FRONTEND_BASE_URL);
   } catch (error) {
     const rescode = error.name === 'JsonWebTokenError' ? 403 : 500;

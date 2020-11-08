@@ -12,7 +12,8 @@ const secret = process.env.SECRET_KEY;
  * @returns {String} - jwt token
  */
 export const generateToken = (payload, expiresIn = '7 days') => {
-  const token = jwt.sign({ ...payload }, secret, { expiresIn });
+  const token = jwt.sign({ ...payload }, 'secret', { expiresIn });
+
   return token;
 };
 
@@ -22,12 +23,12 @@ export const generateToken = (payload, expiresIn = '7 days') => {
  * @returns {Object} decoded object
  */
 export const verifyToken = async token => {
-  const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+  const decoded = await jwt.verify(token, 'secret');
   return decoded;
 };
 
 export const verifyResetPasswordToken = async token => {
-  const decoded = await jwt.verify(token, process.env.SECRET_KEY, error => {
+  const decoded = await jwt.verify(token, 'secret', error => {
     if (error) {
       return { messages: messages.expiredJWT };
     }

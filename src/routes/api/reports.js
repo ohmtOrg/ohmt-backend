@@ -11,11 +11,11 @@ import roles from '../../utils/roles';
 
 const {
   createReport,
-  deleteReport,
-  getOneReport,
+  //   deleteReport,
+  //   getOneReport,
   updateReportDetails,
-  getAllReport,
-  getMyReport,
+  //   getAllReport,
+  //   getMyReport,
 } = reportController;
 
 const reportRoute = router => {
@@ -28,14 +28,14 @@ const reportRoute = router => {
       createReport
     );
 
-  router
-    .route('/report')
-    .get(
-      checkToken,
-      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-      checkUserId,
-      getAllReport
-    );
+  //   router
+  //     .route('/report')
+  //     .get(
+  //       checkToken,
+  //       authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+  //       checkUserId,
+  //       getAllReport
+  //     );
 
   router
     .route('/report/:reportId')
@@ -45,18 +45,18 @@ const reportRoute = router => {
       checkUserId,
       updateReportDetails
     );
-  router
-    .route('/report/:reportId')
-    .delete(checkToken, checkUserId, deleteReport);
-  router
-    .route('/report/:reportId')
-    .get(
-      checkToken,
-      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-      checkUserId,
-      getOneReport
-    );
-  router.route('/report/me').get(checkToken, checkUserId, getMyreport);
+  //   router
+  //     .route('/report/:reportId')
+  //     .delete(checkToken, checkUserId, deleteReport);
+  //   router
+  //     .route('/report/:reportId')
+  //     .get(
+  //       checkToken,
+  //       authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+  //       checkUserId,
+  //       getOneReport
+  //     );
+  //   router.route('/report/me').get(checkToken, checkUserId, getMyreport);
 };
 
 export default reportRoute;

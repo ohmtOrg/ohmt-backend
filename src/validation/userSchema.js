@@ -10,6 +10,13 @@ const signUpSchema = Joi.object({
   country: JoiValidator.validateString().required(),
 });
 
+const createAdminSchema = Joi.object({
+  email: JoiValidator.validateEmail().required(),
+  password: JoiValidator.validatePassword().required(),
+  firstName: JoiValidator.validateString().required(),
+  lastName: JoiValidator.validateString().required(),
+});
+
 const signInSchema = Joi.object({
   email: JoiValidator.validateEmail().required(),
   password: JoiValidator.validatePassword().required(),
@@ -52,4 +59,5 @@ export {
   setUserRoleSchema,
   emailSchema,
   passwordSchema,
+  createAdminSchema,
 };

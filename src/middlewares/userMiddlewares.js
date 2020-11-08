@@ -1,12 +1,9 @@
-import models from '../models';
-import DbServices from '../services/dbServices';
+import { User } from '../models/user';
 import response from '../utils/response';
 import messages from '../utils/messages';
 import { verifyToken } from '../utils/authHelper';
 import stripBearerToken from '../utils/stripBearerToken';
 
-const { User } = models;
-const { getById } = DbServices;
 const { userNotFoundId, invalidToken, noToken, serverError } = messages;
 
 /**
@@ -21,7 +18,7 @@ export const checkUserId = async (req, res, next) => {
   try {
     const userId = req.params.userId || req.query.userId;
     if (userId) {
-      const user = await getById(User, userId, {});
+      const user = await User.findById(userId);
       if (!user) {
         return response(res, 404, 'error', { message: userNotFoundId });
       }
@@ -45,7 +42,7 @@ export const checkToken = async (req, res, next) => {
   try {
     if (token) {
       const decoded = await verifyToken(token);
-      const user = await getById(User, decoded.id, {});
+      const user = await User.FindById(decoded.id);
       if (!user) {
         return response(res, 401, 'error', { message: invalidToken });
       }

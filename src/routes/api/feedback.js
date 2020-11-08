@@ -12,9 +12,9 @@ import roles from '../../utils/roles';
 const {
   createFeedback,
   updateFeedbackDetails,
-  deleteFeedback,
-  getAllFeedback,
-  getOneFeedback,
+  //   deleteFeedback,
+  //   getAllFeedback,
+  //   getOneFeedback,
 } = feedbackController;
 
 const feedbackRoute = router => {
@@ -26,17 +26,17 @@ const feedbackRoute = router => {
       checkUserId,
       createFeedback
     );
-  router
-    .route('/feedback')
-    .get(
-      checkToken,
-      authorize([roles.SUPER_ADMIN]),
-      checkUserId,
-      getAllFeedback
-    );
-  router
-    .route('/feedback/:feedbackId')
-    .get(checkToken, checkUserId, getOneFeedback);
+  //   router
+  //     .route('/feedback')
+  //     .get(
+  //       checkToken,
+  //       authorize([roles.SUPER_ADMIN]),
+  //       checkUserId,
+  //       getAllFeedback
+  //     );
+  //   router
+  //     .route('/feedback/:feedbackId')
+  //     .get(checkToken, checkUserId, getOneFeedback);
 
   router
     .route('/feedback/:feedbackId')
@@ -47,10 +47,10 @@ const feedbackRoute = router => {
       updateFeedbackDetails
     );
 
-  router
-    .route('/feedback/:feedbackId')
+  //   router
+  //     .route('/feedback/:feedbackId')
 
-    .delete(checkToken, checkUserId, deleteFeedback);
+  //     .delete(checkToken, checkUserId, deleteFeedback);
 };
 
 export default feedbackRoute;

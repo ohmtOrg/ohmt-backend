@@ -1,7 +1,7 @@
 import response from '../utils/response';
 import messages from '../utils/messages';
 import DbServices from '../services/dbServices';
-import models from '../models';
+import { Feedback } from '../models/feedback';
 
 const { Feedback } = models;
 const { getById } = DbServices;
@@ -17,7 +17,7 @@ const { getById } = DbServices;
 export const checkFeedbackId = async (req, res, next) => {
   try {
     const { feedbackId } = req.params;
-    const feedback = await getById(Feedback, feedbackId, {});
+    const feedback = await Feedback.getById(feedbackId);
     if (!feedback) {
       return response(res, 404, 'error', {
         message: messages.notExistFeedback,
