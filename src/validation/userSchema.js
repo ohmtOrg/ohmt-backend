@@ -6,7 +6,7 @@ const signUpSchema = Joi.object({
   password: JoiValidator.validatePassword().required(),
   firstName: JoiValidator.validateString().required(),
   lastName: JoiValidator.validateString().required(),
-  organisation: JoiValidator.validateString().required(),
+  organisation: JoiValidator.validateString(),
   country: JoiValidator.validateString().required(),
 });
 

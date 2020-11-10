@@ -19,33 +19,34 @@ const signUp = async (req, res) => {
       email,
       password,
       country,
-      organisation,
+      // organisation,
     } = req.body;
-    const org = Org.findById(organisation)
-      .lean()
-      .exec();
+    // const org = Org.findById(organisation)
+    //   .lean()
+    //   .exec();
 
-    if (!Org) {
-      return response(res, 400, 'error', {
-        message: 'Organisation does not exist',
-      });
-    }
+    // if (!Org) {
+    //   return response(res, 400, 'error', {
+    //     message: 'Organisation does not exist',
+    //   });
+    // }
     const user = {
       firstName,
       lastName,
       email,
-      organisation,
+      sctivated: true,
+      // organisation,
       country,
       password,
     };
-    console.log(here);
     const exists = await User.findOne({ email });
     if (exists)
       return response(res, 400, 'error', {
         message: 'Email address already in use',
       });
 
-    const createdUser = await User.create(...user);
+    const createdUser = await User.create(user);
+    console.log(createdUser);
     const userData = {
       user: {
         id: createdUser._id,
