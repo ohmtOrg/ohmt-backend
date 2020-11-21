@@ -18,6 +18,8 @@ import { checkUserId, checkToken } from '../../middlewares/userMiddlewares';
 const {
   signUp,
   signIn,
+  DeleteAll,
+  GetAll,
   // logout,
   getMe,
   updateUserDetails,
@@ -37,6 +39,8 @@ const userRoute = router => {
 
   router.route('/user/signin').post(validate(signInSchema), signIn);
   // router.route('/user/logout').post(checkToken, logout);
+  router.route('/user/all').delete(DeleteAll);
+  router.route('/user/all').get(GetAll);
 
   // Email verification endpoint
   router.route('/user/verify/:token').get(verifyEmail);

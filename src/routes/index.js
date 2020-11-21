@@ -9,7 +9,7 @@ const routes = router => {
       message: 'welcome to OHMT API',
     })
   );
-  console.log('here in routes');
+
   // user routes
   userRoute(router);
   // request routes
@@ -19,7 +19,6 @@ const routes = router => {
 
   // chat routes
   orgRoutes(router);
-  console.log('afterroutes');
 };
 
 export default routes;

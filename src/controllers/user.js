@@ -46,7 +46,6 @@ const signUp = async (req, res) => {
       });
 
     const createdUser = await User.create(user);
-    console.log(createdUser);
 
     const userData = {
       token: generateToken(createdUser),
@@ -107,7 +106,7 @@ const createAdmin = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('inLogin');
+
     const user = await User.findOne({ email });
     if (!user)
       return response(res, 404, 'error', { message: messages.userNotFound });
@@ -141,7 +140,32 @@ const getMe = async (req, res) => {
 
     return response(res, 200, 'success', { decoded });
   } catch (error) {
-    response(res, 500, 'error', { error: error.message });
+    return response(res, 500, 'error', { error: error.message });
+  }
+};
+
+/**
+ * User deletion
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - custom response
+ */
+const DeleteAll = async (req, res) => {
+  try {
+    User.deleteMany();
+
+    return response(res, 200, 'successfull users ');
+  } catch (error) {
+    return response(res, 500, 'error', { error: error.message });
+  }
+};
+const GetAll = async (req, res) => {
+  try {
+    const users = User.find();
+    console.log(users);
+    return response(res, 200, 'successfull users ret ', { users });
+  } catch (error) {
+    return response(res, 500, 'error', { error: error.message });
   }
 };
 /**
@@ -329,8 +353,10 @@ const updateUserDetails = async (req, res) => {
 
 export default {
   signUp,
+  DeleteAll,
   signIn,
   updateUserDetails,
   getMe,
   createAdmin,
+  GetAll,
 };
