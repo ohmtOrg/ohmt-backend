@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
 
     country: {
       type: String,
@@ -22,20 +30,23 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ['admin', 'super_admin', 'normal', 'manager'],
-      default: 'normal',
+      enum: ['ADMIN', 'NORMAL', 'SA'],
+      default: 'NORMAL',
     },
     activated: {
       type: Boolean,
       required: true,
       default: false,
     },
-
     organisation: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'org',
-      required: false,
+      type: String,
+      required: true,
     },
+    // organisation: {
+    //   type: mongoose.SchemaTypes.ObjectId,
+    //   ref: 'org',
+    //   required: false,
+    // },
   },
   { timestamps: true }
 );

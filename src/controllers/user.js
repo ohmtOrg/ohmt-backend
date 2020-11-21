@@ -19,7 +19,7 @@ const signUp = async (req, res) => {
       email,
       password,
       country,
-      // organisation,
+      organisation,
     } = req.body;
     // const org = Org.findById(organisation)
     //   .lean()
@@ -34,8 +34,8 @@ const signUp = async (req, res) => {
       firstName,
       lastName,
       email,
-      sctivated: true,
-      // organisation,
+      activated: true,
+      organisation,
       country,
       password,
     };
@@ -47,14 +47,18 @@ const signUp = async (req, res) => {
 
     const createdUser = await User.create(user);
     console.log(createdUser);
+
     const userData = {
+      token: generateToken(createdUser),
       user: {
         id: createdUser._id,
+        role: createdUser.role,
+        firstName: createdUser.firstName,
+        lastName: createdUser.lastName,
+        country: createdUser.country,
+        organisation: createdUser.organisation,
+        activated: createdUser.activated,
         email: createdUser.email,
-        token: generateToken({
-          id: createdUser._id,
-          role: createdUser.role,
-        }),
       },
     };
     // const link = `${process.env.BACKEND_BASE_URL}/api/v1/user/verify/${userData.user.token}`;
@@ -114,9 +118,12 @@ const signIn = async (req, res) => {
         message: messages.incorrectPassword,
       });
     }
+    const respond = {
+      token: generateToken(user),
+      user: user,
+    };
 
-    const token = generateToken({ id: user.id, role: user.role });
-    return response(res, 200, 'success', { user, token });
+    return response(res, 200, 'success', respond);
   } catch (error) {
     response(res, 500, 'error', { error: error.message });
   }
@@ -132,8 +139,7 @@ const getMe = async (req, res) => {
   try {
     const { decoded } = req;
 
-    const token = generateToken({ id: decoded.id, role: decoded.role });
-    return response(res, 200, 'success', { decoded, token });
+    return response(res, 200, 'success', { decoded });
   } catch (error) {
     response(res, 500, 'error', { error: error.message });
   }

@@ -70,7 +70,7 @@ const userRoute = router => {
   // );
 
   //get me
-  router.route('/user/me').get(checkToken, checkUserId, getMe);
+  router.route('/user/me').get(checkToken, getMe);
   //forget password
   // router.route('user/forgot/password').post(validate(emailSchema), forgotPassword);
 
