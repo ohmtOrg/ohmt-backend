@@ -2,13 +2,66 @@ import mongoose from 'mongoose';
 
 const reportSchema = new mongoose.Schema(
   {
-    data: [
+    govfeedback: {
+      type: String,
+      unique: false,
+    },
+    impfeedback: {
+      type: String,
+      unique: false,
+    },
+    impl: [
       {
-        _id: false,
-
         id: {
           type: Number,
           required: true,
+          unique: false,
+        },
+        scores: [
+          {
+            type: String,
+            required: true,
+            unique: false,
+          },
+        ],
+        qs: {
+          type: Number,
+          required: true,
+          unique: false,
+        },
+        score: {
+          type: Number,
+          required: true,
+          unique: false,
+        },
+        feedback: {
+          type: String,
+          unique: false,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    gov: [
+      {
+        id: {
+          type: Number,
+          required: true,
+          unique: false,
+        },
+        scores: [
+          {
+            type: String,
+            required: true,
+            unique: false,
+          },
+        ],
+        qs: {
+          type: Number,
+          required: true,
+          unique: false,
         },
         score: {
           type: Number,
@@ -27,7 +80,7 @@ const reportSchema = new mongoose.Schema(
     ],
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true,
     },
   },

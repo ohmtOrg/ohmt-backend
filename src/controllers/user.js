@@ -20,6 +20,9 @@ const signUp = async (req, res) => {
       password,
       country,
       organisation,
+      region,
+      oneHealth,
+      countryCode,
     } = req.body;
     // const org = Org.findById(organisation)
     //   .lean()
@@ -38,6 +41,9 @@ const signUp = async (req, res) => {
       organisation,
       country,
       password,
+      region,
+      oneHealth,
+      countryCode,
     };
     const exists = await User.findOne({ email });
     if (exists)
@@ -58,6 +64,9 @@ const signUp = async (req, res) => {
         organisation: createdUser.organisation,
         activated: createdUser.activated,
         email: createdUser.email,
+        region,
+        oneHealth,
+        countryCode,
       },
     };
     // const link = `${process.env.BACKEND_BASE_URL}/api/v1/user/verify/${userData.user.token}`;
@@ -79,7 +88,12 @@ const createAdmin = async (req, res) => {
         message: 'Email address already in use',
       });
 
-    const createdUser = await User.create({ ...req.body, role: 'admin' });
+    const createdUser = await User.create({
+      ...req.body,
+      role: 'admin',
+      region: 'Admin',
+      oneHealth: true,
+    });
     const userData = {
       user: {
         id: createdUser._id,

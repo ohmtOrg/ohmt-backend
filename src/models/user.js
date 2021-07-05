@@ -9,7 +9,11 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-
+    oneHealth: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     password: {
       type: String,
       required: true,
@@ -27,10 +31,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    region: {
+      type: String,
+      required: true,
+    },
+    countryCode: {
+      type: String,
+      required: true,
+    },
     role: {
       type: String,
       required: true,
-      enum: ['ADMIN', 'NORMAL', 'SA'],
+      enum: ['ADMIN', 'NORMAL', 'SA', 'RM'],
       default: 'NORMAL',
     },
     activated: {
@@ -79,4 +91,4 @@ userSchema.methods.checkPassword = function(password) {
   });
 };
 
-export const User = mongoose.model('user', userSchema);
+export const User = mongoose.model('User', userSchema);

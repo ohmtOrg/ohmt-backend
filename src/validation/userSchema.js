@@ -8,6 +8,9 @@ const signUpSchema = Joi.object({
   lastName: JoiValidator.validateString().required(),
   organisation: JoiValidator.validateString(),
   country: JoiValidator.validateString().required(),
+  oneHealth: JoiValidator.validateBoolean().required(),
+  region: JoiValidator.validateString().required(),
+  countryCode: JoiValidator.validateString().required(),
 });
 
 const createAdminSchema = Joi.object({
