@@ -3,15 +3,33 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema(
   {
+    section: {
+      type: String,
+    },
+    platformName: {
+      type: String,
+    },
+    otherInfo: {
+      type: String,
+    },
+    subRegion: {
+      type: String,
+    },
+    assesmentDate: {
+      type: String,
+    },
+    creationDate: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
     },
+
     oneHealth: {
       type: Boolean,
-      required: true,
       default: false,
     },
     password: {
@@ -29,15 +47,15 @@ const userSchema = new mongoose.Schema(
 
     country: {
       type: String,
-      required: true,
+      // required: false,
     },
     region: {
       type: String,
-      required: true,
+      // required: true,
     },
     countryCode: {
       type: String,
-      required: true,
+      // required: true,
     },
     role: {
       type: String,
@@ -52,7 +70,7 @@ const userSchema = new mongoose.Schema(
     },
     organisation: {
       type: String,
-      required: true,
+      // required: true,
     },
     // organisation: {
     //   type: mongoose.SchemaTypes.ObjectId,

@@ -51,27 +51,20 @@ const signUp = async (req, res) => {
         message: 'Email address already in use',
       });
 
-    const createdUser = await User.create(user);
-
+    const createdUser = await User.create({ ...req.body, activated: true });
     const userData = {
-      token: generateToken(createdUser),
-      user: {
+      token: generateToken({
         id: createdUser._id,
         role: createdUser.role,
-        firstName: createdUser.firstName,
-        lastName: createdUser.lastName,
-        country: createdUser.country,
-        organisation: createdUser.organisation,
-        activated: createdUser.activated,
-        email: createdUser.email,
-        region,
-        oneHealth,
-        countryCode,
+      }),
+      user: {
+        ...createdUser,
       },
     };
     // const link = `${process.env.BACKEND_BASE_URL}/api/v1/user/verify/${userData.user.token}`;
     // const message = createTemplate(verifyEmailMessage, link);
     // await sendMail(userData.user.email, 'VERIFY EMAIL', message);
+    console.log('after signing up', userData);
     return response(res, 200, 'success', userData);
   } catch (error) {
     return response(res, 500, 'error', { errors: error.message });
@@ -132,7 +125,9 @@ const signIn = async (req, res) => {
       });
     }
     const respond = {
-      token: generateToken(user),
+      token: generateToken({
+        id: user._id,
+      }),
       user: user,
     };
 
@@ -151,8 +146,8 @@ const signIn = async (req, res) => {
 const getMe = async (req, res) => {
   try {
     const { decoded } = req;
-
-    return response(res, 200, 'success', { decoded });
+    const user = await User.findById(decoded.id);
+    return response(res, 200, 'success', { user });
   } catch (error) {
     return response(res, 500, 'error', { error: error.message });
   }

@@ -32,7 +32,10 @@ const {
 const { verifyEmail } = verifyEmailController;
 
 const userRoute = router => {
-  router.route('/user/signup').post(validate(signUpSchema), signUp);
+  router.route('/user/signup').post(
+    // validate(signUpSchema),
+    signUp
+  );
   router
     .route('/user/signup/admin')
     .post(validate(createAdminSchema), createAdmin);
@@ -54,14 +57,12 @@ const userRoute = router => {
   //     getAllUsers
   //   );
   // update me
-  router
-    .route('/user/:userId')
-    .put(
-      checkToken,
-      validate(updateUserSchema),
-      checkUserId,
-      updateUserDetails
-    );
+  router.route('/user/:userId').put(
+    checkToken,
+    // validate(updateUserSchema),
+    checkUserId,
+    updateUserDetails
+  );
 
   // get one user
   // router

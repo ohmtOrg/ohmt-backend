@@ -14,28 +14,24 @@ const {
   //   deleteReport,
   //   getOneReport,
   updateReportDetails,
-  //   getAllReport,
+  getAllReports,
   //   getMyReport,
 } = reportController;
 
 const reportRoute = router => {
-  router
-    .route('/report')
-    .post(
-      checkToken,
-      authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-      validate(createReportSchema),
-      createReport
-    );
+  router.route('/report').post(
+    checkToken,
+    // authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+    validate(createReportSchema),
+    createReport
+  );
 
-  //   router
-  //     .route('/report')
-  //     .get(
-  //       checkToken,
-  //       authorize([roles.SUPER_ADMIN, roles.ADMIN]),
-  //       checkUserId,
-  //       getAllReport
-  //     );
+  router.route('/reports').get(
+    checkToken,
+    // authorize([roles.SUPER_ADMIN, roles.ADMIN]),
+    // checkUserId,
+    getAllReports
+  );
 
   router
     .route('/report/:reportId')

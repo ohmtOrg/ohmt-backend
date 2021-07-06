@@ -20,13 +20,27 @@ export const checkUserId = async (req, res, next) => {
     if (userId) {
       const user = await User.findById(userId);
       if (!user) {
-        return response(res, 404, 'error', { message: userNotFoundId });
+        console.log('error');
+        return response(
+          res,
+          404,
+          'error',
+          { message: userNotFoundId },
+          { message: userNotFoundId }
+        );
       }
       return next();
     }
     return next();
   } catch (error) {
-    return response(res, 500, 'error', { message: serverError });
+    console.log(error);
+    return response(
+      res,
+      500,
+      'error',
+      { message: serverError },
+      { message: serverError }
+    );
   }
 };
 /**
@@ -42,9 +56,17 @@ export const checkToken = async (req, res, next) => {
   try {
     if (token) {
       const decoded = await verifyToken(token);
-      const user = await User.FindById(decoded.id);
+      console.log('decoded', decoded);
+      const user = await User.findById(decoded.id);
       if (!user) {
-        return response(res, 401, 'error', { message: invalidToken });
+        console.log('error occured');
+        return response(
+          res,
+          401,
+          'error',
+          { message: invalidToken },
+          { message: invalidToken }
+        );
       }
       req.payload = { ...req.payload, user };
       req.decoded = decoded;
@@ -52,6 +74,7 @@ export const checkToken = async (req, res, next) => {
     }
     return response(res, 401, 'error', { message: noToken });
   } catch (error) {
+    console.log(error);
     return response(res, 500, 'error', error);
   }
 };

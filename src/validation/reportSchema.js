@@ -2,15 +2,15 @@ import Joi from '@hapi/joi';
 import JoiValidator from './JoiValidator';
 
 const createReportSchema = Joi.object({
-  impl: JoiValidator.validateArray().required(),
-  gov: JoiValidator.validateArray().required(),
-  govfeedback: JoiValidator.validateString(),
+  impl: JoiValidator.validArray().required(),
+  gov: JoiValidator.validArray().required(),
+  // govfeedback: JoiValidator.validateString(),
   impfeedback: JoiValidator.validateString(),
 });
 
 const updateReportSchema = Joi.object({
-  impl: JoiValidator.validateArray(),
-  gov: JoiValidator.validateArray(),
+  impl: JoiValidator.validArray(),
+  gov: JoiValidator.validArray(),
   govfeedback: JoiValidator.validateString(),
   impfeedback: JoiValidator.validateString(),
 });

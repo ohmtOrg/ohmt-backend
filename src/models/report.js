@@ -24,12 +24,12 @@ const reportSchema = new mongoose.Schema(
             unique: false,
           },
         ],
-        qs: {
-          type: Number,
-          required: true,
-          unique: false,
-        },
-        score: {
+        // qs: {
+        //   type: Number,
+        //   required: true,
+        //   unique: false,
+        // },
+        value: {
           type: Number,
           required: true,
           unique: false,
@@ -58,12 +58,12 @@ const reportSchema = new mongoose.Schema(
             unique: false,
           },
         ],
-        qs: {
-          type: Number,
-          required: true,
-          unique: false,
-        },
-        score: {
+        // qs: {
+        //   type: String,
+        //   required: true,
+        //   unique: false,
+        // },
+        value: {
           type: Number,
           required: true,
           unique: false,
@@ -89,6 +89,6 @@ const reportSchema = new mongoose.Schema(
   }
 );
 
-reportSchema.index({ user: 1 }, { unique: true });
+// reportSchema.index({ user: 1 }, { unique: true });
 
 export const Report = mongoose.model('Report', reportSchema);
