@@ -21,23 +21,18 @@ const createReport = async (req, res) => {
 };
 const getAllReports = async (req, res) => {
   try {
-    const doc = await Report.find().populate('createdBy');
-    // if(doc.length>=1){
-    //   // console.log(doc)
-    //   for (let [key, value] of Object.entries(doc)) {
-    //     // console.log(`${key}: ${value}`);
-    //     let filteredData = [${value}]
-    //   }
-    //   for (let i in doc ){
-    //     // console.log(i)
-    //     let filteredData = [...i.gov,i.impl]
-    //     avg = filteredData.reduce((r, c) => r + c.value, 0) / filteredData.length;
-    //     console.log(avg)
-    //   }
-    // }
+    // const doc = await Report.find().populate('createdBy');
 
-    // let filteredData = data.filter(({ gender }) => gender == 'female'),
-    // avg = filteredData.reduce((r, c) => r + c.age, 0) / filteredData.length;
+    const doc = await Report.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'createdBy',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+    ]);
 
     return response(res, 200, 'success', doc);
   } catch (error) {

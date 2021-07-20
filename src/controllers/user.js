@@ -83,7 +83,7 @@ const createAdmin = async (req, res) => {
 
     const createdUser = await User.create({
       ...req.body,
-      role: 'admin',
+      role: 'ADMIN',
       region: 'Admin',
       oneHealth: true,
     });
